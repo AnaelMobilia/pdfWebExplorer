@@ -90,6 +90,7 @@ function getHtmlForFiles()
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
         $monHtml = "";
         $nomMiniature = $unFichier . ".png";
+        $nomAffiche = str_replace(".pdf", "", $unFichier);
         if (file_exists(PATH_THUMBS . $nomMiniature)) {
             $maMiniature = URL_THUMBS . $nomMiniature;
         } else {
@@ -97,8 +98,8 @@ function getHtmlForFiles()
             $maMiniature = DEFAULT_THUMBS;
         }
         $monHtml .= "<a href=\"" . URL_DATAS . $unFichier . "\" target=\"blank\" class=\"text-break\">";
-        $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $unFichier . "\" loading=\"lazy\"/><br />";
-        $monHtml .= $unFichier . "</a>\r\n";
+        $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $nomAffiche . "\" loading=\"lazy\"/><br />";
+        $monHtml .= $nomAffiche . "</a>\r\n";
 
         $monRetour->append($monHtml);
     }
