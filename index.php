@@ -93,7 +93,7 @@ function getHtmlForFiles()
             $maMiniature = DEFAULT_THUMBS;
         }
         $monHtml .= "<a href=\"" . URL_DATAS . $unFichier . "\" target=\"blank\" class=\"text-break\">";
-        $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $unFichier . "\" /><br />";
+        $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $unFichier . "\" loading=\"lazy\"/><br />";
         $monHtml .= $unFichier . "</a>\r\n";
 
         $monRetour->append($monHtml);
