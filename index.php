@@ -28,6 +28,9 @@ define('URL_THUMBS', (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_S
 // Miniature par défaut
 define('DEFAULT_THUMBS', URL_THUMBS . "default_image.png");
 
+// Nom de champs utilisés en JS
+define('FIELD_SEARCH', 'recherche');
+
 /**
  * Génère une miniature d'un fichier PDF
  * @param $source PATH du fichier source
@@ -132,7 +135,7 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
         <button type="button" class="btn btn-success">Envoyer...</button>
         <form class="form-inline my-2 my-lg-0" action="#">
             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher"
-                   id="rechercher" onkeyup="maRecherche()">
+                   id="<?= FIELD_SEARCH ?>" onkeyup="maRecherche()">
         </form>
     </nav>
 </header>
@@ -151,10 +154,13 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
 </main>
 
 <script>
+    /**
+     * Filtre les éléments affichés en fonction de la saisie de l'utilisateur
+     */
     function maRecherche() {
         // https://www.w3schools.com/howto/howto_js_filter_table.asp
-        const valeurCherchee = document.getElementById("rechercher").value.toUpperCase();
-        const mesChamps = document.getElementsByClassName("col");
+        const valeurCherchee = document.querySelector("#<?= FIELD_SEARCH ?>").value.toUpperCase();
+        const mesChamps = document.querySelectorAll(".col");
         for (let i = 0; i < mesChamps.length; i++) {
             let monChamp = mesChamps[i].getElementsByTagName("a")[0];
             if (monChamp) {
