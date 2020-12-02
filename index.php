@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 /*
  * Copyright 2020-2020 Anael MOBILIA
  *
@@ -19,6 +17,12 @@ error_reporting(E_ALL);
  * You should have received a copy of the GNU General Public License
  * along with pdfWebExplorer If not, see <http://www.gnu.org/licenses/>
  */
+// Forcer le HTTPS
+if($_SERVER["HTTPS"] != "on") {
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    die();
+}
+
 // Répertoire & URL pour les les fichiers PDF
 define('PATH_DATAS', './fichiers/');
 define('URL_DATAS', (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . substr(PATH_DATAS, 1));
