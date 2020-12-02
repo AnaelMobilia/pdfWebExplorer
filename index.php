@@ -144,7 +144,11 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
         $miniatureFichier = PATH_THUMBS . $unFichier . ".png";
         // Génération des miniatures manquantes///
         if (!file_exists($miniatureFichier)) {
-            genPdfThumbnail(PATH_DATAS . $unFichier, $miniatureFichier);
+            try {
+                genPdfThumbnail(PATH_DATAS . $unFichier, $miniatureFichier);
+            } catch (ImagickException $e) {
+                $logError .= "Erreur à la génération de la miniature pour " . $unFichier . " (" . $e->getTraceAsString() . ")";
+            }
         }
     }
     die();
