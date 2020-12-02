@@ -102,6 +102,42 @@ function getHtmlForFiles()
     return $monRetour;
 }
 
+// Envoi de fichiers sur la plateforme
+if (isset($_FILES[FIELD_UPLOAD])) {
+    $mesFichiers = [];
+    // Cas envoi simple => on convertit en array comme si envoi multiple
+    if (!is_array($_FILES[FIELD_UPLOAD]["name"])) {
+        $mesFichiers["name"] = [$_FILES[FIELD_UPLOAD]["name"]];
+        $mesFichiers["tmp_name"] = [$_FILES[FIELD_UPLOAD]["tmp_name"]];
+    } else {
+        // Envoi multiple, déjà bien formaté
+        $mesFichiers = $_FILES[FIELD_UPLOAD];
+    }
+    $nbFichiers = sizeof($mesFichiers["name"]);
+    $nbUploadOk = 0;
+
+    // Pour chaque fichier
+    for ($i = 0; $i < $nbFichiers; $i++) {
+        // Nettoyage du nom du fichier
+        $nom = str_replace(["..", "/", "\\", "<", ">"], "", $mesFichiers["name"][$i]);
+
+        // Vérification du type du fichier
+        if (mime_content_type($mesFichiers["tmp_name"][$i]) == MIME_TYPE) {
+            // Déplacement du fichier
+            if (move_uploaded_file($mesFichiers["tmp_name"][$i], PATH_DATAS . $nom)) {
+                $nbUploadOk++;
+            } else {
+                $logError .= "Erreur au déplacement du fichier " . $mesFichiers["tmp_name"][$i] . " vers " . PATH_DATAS . $nom . " !<br />";
+            }
+        } else {
+            $logError .= "Le fichier " . $nom . " n'est pas de type " . MIME_TYPE . " !<br />";
+        }
+    }
+    if ($nbUploadOk > 0) {
+        $logSuccess .= "Envoi réussi de " . $nbUploadOk . " fichier" . ($nbUploadOk > 1 ? "s" : "") . "<br />";
+    }
+}
+
 // Si on demande une mise à jour des miniatures
 if (isset($_GET['updateCache']) || isset($argv[1])) {
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
@@ -137,7 +173,7 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
             pdfWebExplorer
         </a>
         <!-- Envoi de fichiers PDF -->
-        <form method="POST" class="form-inline border border-info">
+        <form method="POST" enctype="multipart/form-data" class="form-inline border border-info">
             <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>" type="file"
                    class="file" multiple onchange="verifierNombreFichiers()"/>
             <input type="submit" class="btn btn-info" value="Envoyer des fichiers"/>
