@@ -27,9 +27,12 @@ define('PATH_THUMBS', './miniatures/');
 define('URL_THUMBS', (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . substr(PATH_THUMBS, 1));
 // Miniature par défaut
 define('DEFAULT_THUMBS', URL_THUMBS . "default_image.png");
+// Type MIME des fichiers acceptés
+define('MIME_TYPE', 'application/pdf');
 
 // Nom de champs utilisés en JS
 define('FIELD_SEARCH', 'recherche');
+define('FIELD_UPLOAD', 'upload');
 
 /**
  * Génère une miniature d'un fichier PDF
@@ -68,9 +71,6 @@ function getPdfFiles($path)
     }
     return $monRetour;
 }
-
-// if cron...
-//     genPdfThumbnail(PATH_DATAS . $unFichier, PATH_THUMBS . $unFichier . ".png"); // generates /uploads/my.jpg
 
 /**
  * Génère le code HTML pour afficher les fichiers, miniatures, liens...
@@ -132,7 +132,12 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
             <img src="<?= DEFAULT_THUMBS ?>" width="30" height="30" alt="pdfWebExplorer">
             pdfWebExplorer
         </a>
-        <button type="button" class="btn btn-success">Envoyer...</button>
+        <!-- Envoi de fichiers PDF -->
+        <form method="POST" class="form-inline border border-info">
+            <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>" type="file"
+                   class="file" multiple onchange="verifierNombreFichiers()"/>
+            <input type="submit" class="btn btn-info" value="Envoyer des fichiers"/>
+        </form>
         <form class="form-inline my-2 my-lg-0" action="#">
             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher"
                    id="<?= FIELD_SEARCH ?>" onkeyup="maRecherche()">
@@ -171,6 +176,17 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
                     mesChamps[i].style.display = "none";
                 }
             }
+        }
+    }
+
+    /**
+     * Vérifie le nombre de fichiers à envoyer
+     */
+    function verifierNombreFichiers() {
+        const input = document.querySelector("#<?= FIELD_UPLOAD ?>");
+        // Trop de fichiers
+        if (input.files.length > <?= ini_get('max_file_uploads') ?>) {
+            alert("Trop de fichiers ont été selectionnés (maximum <?= ini_get('max_file_uploads') ?>)");
         }
     }
 </script>
