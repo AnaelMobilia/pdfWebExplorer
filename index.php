@@ -36,8 +36,8 @@ define('FIELD_UPLOAD', 'upload');
 
 /**
  * Génère une miniature d'un fichier PDF
- * @param $source PATH du fichier source
- * @param $destination PATH de l'image destination
+ * @param $source string PATH du fichier source
+ * @param $destination string PATH de l'image destination
  * @throws ImagickException
  */
 function genPdfThumbnail($source, $destination)
@@ -54,7 +54,7 @@ function genPdfThumbnail($source, $destination)
 
 /**
  * Liste des fichiers PDF contenus dans un répertoire
- * @param $path PATH à analyser (sans récursivité
+ * @param $path string PATH à analyser (sans récursivité
  * @return ArrayObject des fichiers
  */
 function getPdfFiles($path)
