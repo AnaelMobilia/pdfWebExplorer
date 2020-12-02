@@ -121,7 +121,7 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
     <link rel="icon" type="image/png" href="<?= DEFAULT_THUMBS ?>" sizes="16x16">
 
     <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link href="css/bootstrap-4.5.3.min.css" rel="stylesheet"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body class="d-flex flex-column h-100">
