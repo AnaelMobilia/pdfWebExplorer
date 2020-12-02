@@ -34,6 +34,10 @@ define('MIME_TYPE', 'application/pdf');
 define('FIELD_SEARCH', 'recherche');
 define('FIELD_UPLOAD', 'upload');
 
+// Variables de retour utilisateur
+$logSuccess = "";
+$logError = "";
+
 /**
  * Génère une miniature d'un fichier PDF
  * @param $source string PATH du fichier source
@@ -148,6 +152,16 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
     <div class="container" id="monContainer">
+        <?php if (!empty($logSuccess)) : ?>
+            <div class="alert alert-success" role="alert">
+                <?= $logSuccess ?>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($logError)) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?= $logError ?>
+            </div>
+        <?php endif; ?>
         <div class="row">
             <? foreach (getHtmlForFiles() as $unFichier): ?>
                 <div class="col">
