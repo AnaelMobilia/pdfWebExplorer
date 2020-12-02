@@ -182,10 +182,13 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
             pdfWebExplorer
         </a>
         <!-- Envoi de fichiers PDF -->
-        <form method="POST" enctype="multipart/form-data" class="form-inline border border-info">
+        <form method="POST" enctype="multipart/form-data" class="form-inline border border-info rounded">
+            &nbsp;
             <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>" type="file"
                    class="file" multiple onchange="verifierNombreFichiers()"/>
+            &nbsp;
             <input type="submit" class="btn btn-info" value="Envoyer des fichiers"/>
+            &nbsp;
         </form>
         <form class="form-inline my-2 my-lg-0" action="#">
             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher"
