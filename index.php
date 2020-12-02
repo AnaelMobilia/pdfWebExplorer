@@ -144,7 +144,7 @@ if (isset($_FILES[FIELD_UPLOAD])) {
 }
 
 // Si on demande une mise à jour des miniatures
-if (isset($_GET['updateCache']) || isset($argv[1])) {
+if (isset($_GET['updateCache']) || isset($_SERVER['argv'])) {
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
         $miniatureFichier = PATH_THUMBS . $unFichier . ".png";
         // Génération des miniatures manquantes///
