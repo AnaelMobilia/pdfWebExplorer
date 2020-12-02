@@ -115,6 +115,7 @@ if (isset($_GET['updateCache']) || isset($argv[1])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <title>phpWebExplorer</title>
+    <link rel="icon" type="image/png" href="<?= DEFAULT_THUMBS?>" sizes="16x16">
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet"
