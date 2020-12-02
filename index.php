@@ -92,8 +92,8 @@ function getHtmlForFiles()
             // Miniature absente -> image par défaut
             $maMiniature = DEFAULT_THUMBS;
         }
-        $monHtml .= "<a href=\"" . URL_DATAS . $unFichier . "\" target=\"blank\">";
-        $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" />";
+        $monHtml .= "<a href=\"" . URL_DATAS . $unFichier . "\" target=\"blank\" class=\"text-break\">";
+        $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $unFichier . "\" /><br />";
         $monHtml .= $unFichier . "</a>\r\n";
 
         $monRetour->append($monHtml);
