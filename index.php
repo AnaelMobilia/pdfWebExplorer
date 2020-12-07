@@ -18,7 +18,7 @@
  * along with pdfWebExplorer If not, see <http://www.gnu.org/licenses/>
  */
 // Est-ce une tâche cron
-define('IS_CRON', isset($_SERVER['argv'][0]));
+define('IS_CRON', !isset($_SERVER['REMOTE_ADDR']));
 
 // Forcer le HTTPS (sauf pour tâche cron)
 if ($_SERVER["HTTPS"] != "on" && !IS_CRON) {
