@@ -106,7 +106,7 @@ function getHtmlForFiles($hideThumbs)
             $maMiniature = DEFAULT_THUMBS;
         }
         $monHtml .= "<a href=\"" . URL_DATAS . $unFichier . "\" target=\"blank\" class=\"text-break\">";
-        if(!$hideThumbs) {
+        if (!$hideThumbs) {
             $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $nomAffiche . "\" loading=\"lazy\"/><br />";
         }
         $monHtml .= $nomAffiche . "</a>\r\n";
@@ -222,27 +222,14 @@ if (isset($_GET['updateCache']) || IS_CRON) {
             </div>
         <?php endif; ?>
         <div class="row">
-            <?php if (SLOW_CONNEXION): ?>
-            <ul>
-                <?php endif; ?>
-                <? foreach (getHtmlForFiles(SLOW_CONNEXION) as $unFichier): ?>
-                    <?php if (!SLOW_CONNEXION): ?>
-                        <div class="col">
-                    <?php else: ?>
-                        <li class="col">
-                    <?php endif; ?>
-                    <?= $unFichier ?>
-                    <?php if (!SLOW_CONNEXION): ?>
-                        </div>
-                    <?php else: ?>
-                        </li>
-                    <?php endif; ?>
-                <? endforeach; ?>
-                <?php if (SLOW_CONNEXION): ?>
-            </ul>
-        <?php endif; ?>
+            <?= (SLOW_CONNEXION ? "<ul>" : "") ?>
+            <? foreach (getHtmlForFiles(SLOW_CONNEXION) as $unFichier): ?>
+                <<?= (SLOW_CONNEXION ? "li" : "div") ?> class="col">
+                <?= $unFichier ?>
+                <<?= (SLOW_CONNEXION ? "/li" : "/div") ?>>
+            <? endforeach; ?>
+            <?= (SLOW_CONNEXION ? "</ul>" : "") ?>
         </div>
-    </div>
 </main>
 
 <script>
