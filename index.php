@@ -17,8 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with pdfWebExplorer If not, see <http://www.gnu.org/licenses/>
  */
-// Forcer le HTTPS
-if($_SERVER["HTTPS"] != "on") {
+// Est-ce une tâche cron
+define('IS_CRON', isset($_SERVER['argv'][0]));
+
+// Forcer le HTTPS (sauf pour tâche cron)
+if ($_SERVER["HTTPS"] != "on" && !IS_CRON) {
     header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
     die();
 }
@@ -144,7 +147,7 @@ if (isset($_FILES[FIELD_UPLOAD])) {
 }
 
 // Si on demande une mise à jour des miniatures
-if (isset($_GET['updateCache']) || isset($_SERVER['argv'])) {
+if (isset($_GET['updateCache']) || IS_CRON) {
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
         $miniatureFichier = PATH_THUMBS . $unFichier . ".png";
         // Génération des miniatures manquantes///
