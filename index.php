@@ -27,11 +27,13 @@ if ($_SERVER["HTTPS"] != "on" && !IS_CRON) {
 }
 
 // Répertoire & URL pour les les fichiers PDF
-define('PATH_DATAS', './fichiers/');
-define('URL_DATAS', (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . substr(PATH_DATAS, 1));
+define('FOLDER_DATAS', '/fichiers/');
+define('PATH_DATAS', __DIR__ . FOLDER_DATAS);
+define('URL_DATAS', "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . substr(FOLDER_DATAS, 1));
 // Répertoire & URL pour les les miniatures des fichiers PDF
-define('PATH_THUMBS', './miniatures/');
-define('URL_THUMBS', (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . substr(PATH_THUMBS, 1));
+define('FOLDER_THUMBS', '/miniatures/');
+define('PATH_THUMBS', __DIR__ . FOLDER_THUMBS);
+define('URL_THUMBS', "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . substr(FOLDER_THUMBS, 1));
 // Miniature par défaut
 define('DEFAULT_THUMBS', URL_THUMBS . "default_image.png");
 // Type MIME des fichiers acceptés
