@@ -19,6 +19,8 @@
  */
 // Est-ce une tâche cron
 define('IS_CRON', !isset($_SERVER['REMOTE_ADDR']));
+// Connexion limitée
+define('SLOW_CONNEXION', isset($_REQUEST['slow']));
 
 // Forcer le HTTPS (sauf pour tâche cron)
 if ($_SERVER["HTTPS"] != "on" && !IS_CRON) {
@@ -87,9 +89,10 @@ function getPdfFiles($path)
 
 /**
  * Génère le code HTML pour afficher les fichiers, miniatures, liens...
+ * @param boolean Faut-il cacher les miniatures
  * @return ArrayObject code HTML
  */
-function getHtmlForFiles()
+function getHtmlForFiles($hideThumbs)
 {
     $monRetour = new ArrayObject();
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
@@ -103,7 +106,9 @@ function getHtmlForFiles()
             $maMiniature = DEFAULT_THUMBS;
         }
         $monHtml .= "<a href=\"" . URL_DATAS . $unFichier . "\" target=\"blank\" class=\"text-break\">";
-        $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $nomAffiche . "\" loading=\"lazy\"/><br />";
+        if(!$hideThumbs) {
+            $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $nomAffiche . "\" loading=\"lazy\"/><br />";
+        }
         $monHtml .= $nomAffiche . "</a>\r\n";
 
         $monRetour->append($monHtml);
@@ -186,6 +191,7 @@ if (isset($_GET['updateCache']) || IS_CRON) {
             <img src="<?= DEFAULT_THUMBS ?>" width="30" height="30" alt="pdfWebExplorer">
             pdfWebExplorer
         </a>
+        <a href="<?= (SLOW_CONNEXION ? '?' : '?slow') ?>" class="btn btn-info">Changer d'affichage</a>
         <!-- Envoi de fichiers PDF -->
         <form method="POST" enctype="multipart/form-data" class="form-inline border border-info rounded">
             &nbsp;
@@ -216,11 +222,25 @@ if (isset($_GET['updateCache']) || IS_CRON) {
             </div>
         <?php endif; ?>
         <div class="row">
-            <? foreach (getHtmlForFiles() as $unFichier): ?>
-                <div class="col">
+            <?php if (SLOW_CONNEXION): ?>
+            <ul>
+                <?php endif; ?>
+                <? foreach (getHtmlForFiles(SLOW_CONNEXION) as $unFichier): ?>
+                    <?php if (!SLOW_CONNEXION): ?>
+                        <div class="col">
+                    <?php else: ?>
+                        <li class="col">
+                    <?php endif; ?>
                     <?= $unFichier ?>
-                </div>
-            <? endforeach; ?>
+                    <?php if (!SLOW_CONNEXION): ?>
+                        </div>
+                    <?php else: ?>
+                        </li>
+                    <?php endif; ?>
+                <? endforeach; ?>
+                <?php if (SLOW_CONNEXION): ?>
+            </ul>
+        <?php endif; ?>
         </div>
     </div>
 </main>
