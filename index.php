@@ -182,6 +182,14 @@ if (isset($_GET['updateCache']) || IS_CRON) {
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap-4.5.3.min.css" rel="stylesheet"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- Sticky navbar -->
+    <style>
+        /* Show it is fixed to the top */
+        body {
+            min-height: 75rem;
+            padding-top: 4.5rem;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column h-100">
 <header>
