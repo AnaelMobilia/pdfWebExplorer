@@ -27,7 +27,7 @@
  * @param string $destination PATH de l'image destination
  * @throws ImagickException
  */
-function genPdfThumbnail($source, $destination)
+function genPdfThumbnail(string $source, string $destination)
 {
     echo $source . " -> " . $destination . "\r\n";
     $im = new Imagick($source . "[0]"); // 0-first page, 1-second page
@@ -44,7 +44,7 @@ function genPdfThumbnail($source, $destination)
  * @param string $path PATH à analyser (sans récursivité
  * @return ArrayObject des fichiers
  */
-function getPdfFiles($path)
+function getPdfFiles(string $path) : ArrayObject
 {
     $monRetour = new ArrayObject();
 
@@ -61,10 +61,10 @@ function getPdfFiles($path)
 
 /**
  * Génère le code HTML pour afficher les fichiers, miniatures, liens...
- * @param boolean $hideThumbs Faut-il cacher les miniatures
+ * @param bool $hideThumbs Faut-il cacher les miniatures
  * @return ArrayObject code HTML
  */
-function getHtmlForFiles($hideThumbs)
+function getHtmlForFiles(bool $hideThumbs) : ArrayObject
 {
     $monRetour = new ArrayObject();
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
@@ -94,7 +94,7 @@ function getHtmlForFiles($hideThumbs)
  * @param string $logError log d'erreurs
  * @param string $logSuccess log de succès
  */
-function saveUploadedFiles(&$logError, &$logSuccess) {
+function saveUploadedFiles(string &$logError, string &$logSuccess) {
     $mesFichiers = [];
     // Cas envoi simple => on convertit en array comme si envoi multiple
     if (!is_array($_FILES[FIELD_UPLOAD]["name"])) {
