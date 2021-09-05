@@ -96,7 +96,7 @@ if (isset($_GET['updateCache']) || IS_CRON) {
         <label for="categorie" class="form-label">Type :</label>
         <select class="form-select d-inline" id="categorie" style="width: auto !important;"
                 onchange="self.location.href='<?= BASE_URL_AFFICHAGE ?>&cat='+this.value;">
-            <option value="-1">Tous</option>
+            <option value="<?= CATEGORIES_TOUTES ?>">Tous</option>
             <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
                 <option value="<?= $id ?>" <?= ((isset($_REQUEST["cat"]) && $_REQUEST["cat"] == $id) ? "selected" : "") ?>><?= $uneCategorie ?></option>
             <?php endforeach; ?>

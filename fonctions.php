@@ -41,19 +41,31 @@ function genPdfThumbnail(string $source, string $destination)
 
 /**
  * Liste des fichiers PDF contenus dans un répertoire
- * @param string $path PATH à analyser (sans récursivité
- * @return ArrayObject des fichiers
+ * @param string $path PATH à analyser (sans récursivité)
+ * @return ArrayObject des fichiers (répondant au critère de filtre éventuel)
  */
-function getPdfFiles(string $path) : ArrayObject
+function getPdfFiles(string $path): ArrayObject
 {
     $monRetour = new ArrayObject();
+
+    // Filtre éventuel
+    $monFiltre = "";
+    if (isset($_REQUEST["cat"]) && is_numeric($_REQUEST["cat"]) && $_REQUEST["cat"] != CATEGORIES_TOUTES) {
+        $monFiltre = (int)$_REQUEST["cat"] . " - ";
+    }
 
     $listeBrute = scandir($path);
     foreach ($listeBrute as $unItem) {
         // Si ce n'est pas un dossier...
         if (!is_dir($path . $unItem) && substr($unItem, -4) == ".pdf") {
-            // On l'ajoute au retour
-            $monRetour->append($unItem);
+            // Vérification du filtre éventuel
+            if (
+                $monFiltre === ""    // Pas de filtre
+                || substr($unItem, 0, strlen($monFiltre)) === $monFiltre // Filtre OK
+            ) {
+                // On l'ajoute au retour
+                $monRetour->append($unItem);
+            }
         }
     }
     return $monRetour;
