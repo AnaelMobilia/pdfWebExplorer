@@ -106,24 +106,47 @@ if (isset($_GET['updateCache']) || IS_CRON) {
             </select>
         </div>
         <!-- Envoi de fichiers PDF -->
-        <!--
-        <form method="POST" enctype="multipart/form-data" class="form-inline border border-info rounded" disabled="">
-            &nbsp;
-            <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>" type="file"
-                   class="file" multiple onchange="verifierNombreFichiers()" disabled/>
-            &nbsp;
-            <input type="submit" class="btn btn-info" value="Envoyer des fichiers" disabled/>
-            &nbsp;
-        </form>
--->
-        <button type="button" class="btn btn-info" disabled>Envoyer des fichiers</button>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpload">
+            Envoyer des fichiers
+        </button>
         <form class="form-inline my-2 my-lg-0" action="#">
             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher"
                    id="<?= FIELD_SEARCH ?>" onkeyup="maRecherche()">
         </form>
     </nav>
 </header>
-
+<!-- Modal d'envoi des fichiers -->
+<div class="modal fade" id="modalUpload" tabindex="-1" aria-labelledby="modalUploadLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalUploadLabel">Envoyer des fichiers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="<?= FIELD_UPLOAD ?>" class="form-label">Document(s)</label>
+                        <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>"
+                               type="file" class="form-control" multiple onchange="verifierNombreFichiers()"/>
+                    </div>
+                    <!-- Catégorie du fichier -->
+                    <?php if (!empty(CATEGORIES)) : ?>
+                        <div class="mb-3">
+                            <label for="categorie" class="form-label">Catégorie</label>
+                            <select name="cat" class="form-select" id="categorie">
+                                <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
+                                    <option value="<?= $id ?>"><?= $uneCategorie ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endif; ?>
+                    <input type="submit" class="btn btn-info" value="Envoyer" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
     <div class="container" id="monContainer">
@@ -148,6 +171,9 @@ if (isset($_GET['updateCache']) || IS_CRON) {
         </div>
 </main>
 
+<script src="js/bootstrap-5.1.0.min.js"
+        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+        crossorigin="anonymous"></script>
 <script>
     /**
      * Filtre les éléments affichés en fonction de la saisie de l'utilisateur

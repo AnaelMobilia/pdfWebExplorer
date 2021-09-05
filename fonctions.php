@@ -128,6 +128,10 @@ function saveUploadedFiles(string &$logError, string &$logSuccess)
     for ($i = 0; $i < $nbFichiers; $i++) {
         // Nettoyage du nom du fichier
         $nom = str_replace(["..", "/", "\\", "<", ">"], "", $mesFichiers["name"][$i]);
+        // Gestion de la catégorie
+        if (!empty(CATEGORIES)) {
+            $nom = (int)$_REQUEST["cat"] . " - " . $nom;
+        }
 
         // Vérification du type du fichier
         if (mime_content_type($mesFichiers["tmp_name"][$i]) == MIME_TYPE) {
