@@ -83,6 +83,10 @@ function getHtmlForFiles(bool $hideThumbs): ArrayObject
         $monHtml = "";
         $nomMiniature = $unFichier . ".png";
         $nomAffiche = str_replace(".pdf", "", $unFichier);
+        // Suppression de la catégorie si définies
+        if(!empty(CATEGORIES)) {
+            $nomAffiche = preg_replace("/^[\d] - (.*)$/", "$1", $nomAffiche, 1);
+        }
         if (file_exists(PATH_THUMBS . $nomMiniature)) {
             $maMiniature = URL_THUMBS . $nomMiniature;
         } else {
