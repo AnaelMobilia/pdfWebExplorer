@@ -87,7 +87,8 @@ if (isset($_GET['updateCache']) || IS_CRON) {
         </a>
         <!-- Type d'affichage -->
         <label for="affichage" class="form-label">Affichage :</label>
-        <select class="form-select d-inline" id="affichage" style="width: auto !important;" onchange="self.location.href='index.php'+this.value;">
+        <select class="form-select d-inline" id="affichage" style="width: auto !important;"
+                onchange="self.location.href='<?= BASE_URL ?>'+this.value;">
             <option value="?" <?= (SLOW_CONNEXION ? '' : 'selected') ?>>Standard</option>
             <option value="?slow" <?= (SLOW_CONNEXION ? 'selected' : '') ?>>Simplifié</option>
         </select>

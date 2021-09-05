@@ -23,14 +23,16 @@
 // Connexion limitée
 define('SLOW_CONNEXION', isset($_REQUEST['slow']));
 
+// URL par défaut
+define('BASE_URL', "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']));
 // Répertoire & URL pour les les fichiers PDF
 define('FOLDER_DATAS', '/fichiers/');
 define('PATH_DATAS', __DIR__ . FOLDER_DATAS);
-define('URL_DATAS', "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . substr(FOLDER_DATAS, 1));
+define('URL_DATAS', BASE_URL . substr(FOLDER_DATAS, 1));
 // Répertoire & URL pour les les miniatures des fichiers PDF
 define('FOLDER_THUMBS', '/miniatures/');
 define('PATH_THUMBS', __DIR__ . FOLDER_THUMBS);
-define('URL_THUMBS', "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . substr(FOLDER_THUMBS, 1));
+define('URL_THUMBS', BASE_URL . substr(FOLDER_THUMBS, 1));
 // Miniature par défaut
 define('DEFAULT_THUMBS', URL_THUMBS . "default_image.png");
 // Type MIME des fichiers acceptés
