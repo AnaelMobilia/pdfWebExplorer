@@ -23,8 +23,8 @@
 
 /**
  * Génère une miniature d'un fichier PDF
- * @param $source string PATH du fichier source
- * @param $destination string PATH de l'image destination
+ * @param string $source PATH du fichier source
+ * @param string $destination PATH de l'image destination
  * @throws ImagickException
  */
 function genPdfThumbnail($source, $destination)
@@ -41,7 +41,7 @@ function genPdfThumbnail($source, $destination)
 
 /**
  * Liste des fichiers PDF contenus dans un répertoire
- * @param $path string PATH à analyser (sans récursivité
+ * @param string $path PATH à analyser (sans récursivité
  * @return ArrayObject des fichiers
  */
 function getPdfFiles($path)
@@ -61,7 +61,7 @@ function getPdfFiles($path)
 
 /**
  * Génère le code HTML pour afficher les fichiers, miniatures, liens...
- * @param boolean Faut-il cacher les miniatures
+ * @param boolean $hideThumbs Faut-il cacher les miniatures
  * @return ArrayObject code HTML
  */
 function getHtmlForFiles($hideThumbs)
