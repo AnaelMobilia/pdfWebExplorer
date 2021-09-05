@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2020-2020 Anael MOBILIA
+ * Copyright 2020-2021 Anael MOBILIA
  *
  * This file is part of pdfWebExplorer
  *
@@ -19,8 +19,6 @@
  */
 // Est-ce une tâche cron
 define('IS_CRON', !isset($_SERVER['REMOTE_ADDR']));
-// Connexion limitée
-define('SLOW_CONNEXION', isset($_REQUEST['slow']));
 
 // Forcer le HTTPS (sauf pour tâche cron)
 if ($_SERVER["HTTPS"] != "on" && !IS_CRON) {
@@ -28,94 +26,12 @@ if ($_SERVER["HTTPS"] != "on" && !IS_CRON) {
     die();
 }
 
-// Répertoire & URL pour les les fichiers PDF
-define('FOLDER_DATAS', '/fichiers/');
-define('PATH_DATAS', __DIR__ . FOLDER_DATAS);
-define('URL_DATAS', "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . substr(FOLDER_DATAS, 1));
-// Répertoire & URL pour les les miniatures des fichiers PDF
-define('FOLDER_THUMBS', '/miniatures/');
-define('PATH_THUMBS', __DIR__ . FOLDER_THUMBS);
-define('URL_THUMBS', "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . substr(FOLDER_THUMBS, 1));
-// Miniature par défaut
-define('DEFAULT_THUMBS', URL_THUMBS . "default_image.png");
-// Type MIME des fichiers acceptés
-define('MIME_TYPE', 'application/pdf');
-
-// Nom de champs utilisés en JS
-define('FIELD_SEARCH', 'recherche');
-define('FIELD_UPLOAD', 'upload');
+require "config.php";
+require "fonctions.php";
 
 // Variables de retour utilisateur
 $logSuccess = "";
 $logError = "";
-
-/**
- * Génère une miniature d'un fichier PDF
- * @param $source string PATH du fichier source
- * @param $destination string PATH de l'image destination
- * @throws ImagickException
- */
-function genPdfThumbnail($source, $destination)
-{
-    echo $source . " -> " . $destination . "\r\n";
-    $im = new Imagick($source . "[0]"); // 0-first page, 1-second page
-    $im->setImageColorspace(255); // prevent image colors from inverting
-    $im->setimageformat("png");
-    $im->thumbnailimage(150, 150); // width and height
-    $im->writeimage($destination);
-    $im->clear();
-    $im->destroy();
-}
-
-/**
- * Liste des fichiers PDF contenus dans un répertoire
- * @param $path string PATH à analyser (sans récursivité
- * @return ArrayObject des fichiers
- */
-function getPdfFiles($path)
-{
-    $monRetour = new ArrayObject();
-
-    $listeBrute = scandir($path);
-    foreach ($listeBrute as $unItem) {
-        // Si ce n'est pas un dossier...
-        if (!is_dir($path . $unItem) && substr($unItem, -4) == ".pdf") {
-            // On l'ajoute au retour
-            $monRetour->append($unItem);
-        }
-    }
-    return $monRetour;
-}
-
-/**
- * Génère le code HTML pour afficher les fichiers, miniatures, liens...
- * @param boolean Faut-il cacher les miniatures
- * @return ArrayObject code HTML
- */
-function getHtmlForFiles($hideThumbs)
-{
-    $monRetour = new ArrayObject();
-    foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
-        $monHtml = "";
-        $nomMiniature = $unFichier . ".png";
-        $nomAffiche = str_replace(".pdf", "", $unFichier);
-        if (file_exists(PATH_THUMBS . $nomMiniature)) {
-            $maMiniature = URL_THUMBS . $nomMiniature;
-        } else {
-            // Miniature absente -> image par défaut
-            $maMiniature = DEFAULT_THUMBS;
-        }
-        $monHtml .= "<a href=\"" . URL_DATAS . $unFichier . "\" target=\"blank\" class=\"text-break\">";
-        if (!$hideThumbs) {
-            $monHtml .= "<img src=\"" . $maMiniature . "\" width=\"100\" height=\"100\" alt=\"" . $nomAffiche . "\" loading=\"lazy\"/><br />";
-        }
-        $monHtml .= $nomAffiche . "</a>\r\n";
-
-        $monRetour->append($monHtml);
-    }
-
-    return $monRetour;
-}
 
 // Envoi de fichiers sur la plateforme
 if (isset($_FILES[FIELD_UPLOAD])) {
