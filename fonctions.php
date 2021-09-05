@@ -88,3 +88,43 @@ function getHtmlForFiles($hideThumbs)
 
     return $monRetour;
 }
+
+/**
+ * Traiter et enregistrer de nouveaux fichiers
+ * @param string $logError log d'erreurs
+ * @param string $logSuccess log de succès
+ */
+function saveUploadedFiles(&$logError, &$logSuccess) {
+    $mesFichiers = [];
+    // Cas envoi simple => on convertit en array comme si envoi multiple
+    if (!is_array($_FILES[FIELD_UPLOAD]["name"])) {
+        $mesFichiers["name"] = [$_FILES[FIELD_UPLOAD]["name"]];
+        $mesFichiers["tmp_name"] = [$_FILES[FIELD_UPLOAD]["tmp_name"]];
+    } else {
+        // Envoi multiple, déjà bien formaté
+        $mesFichiers = $_FILES[FIELD_UPLOAD];
+    }
+    $nbFichiers = sizeof($mesFichiers["name"]);
+    $nbUploadOk = 0;
+
+    // Pour chaque fichier
+    for ($i = 0; $i < $nbFichiers; $i++) {
+        // Nettoyage du nom du fichier
+        $nom = str_replace(["..", "/", "\\", "<", ">"], "", $mesFichiers["name"][$i]);
+
+        // Vérification du type du fichier
+        if (mime_content_type($mesFichiers["tmp_name"][$i]) == MIME_TYPE) {
+            // Déplacement du fichier
+            if (move_uploaded_file($mesFichiers["tmp_name"][$i], PATH_DATAS . $nom)) {
+                $nbUploadOk++;
+            } else {
+                $logError .= "Erreur au déplacement du fichier " . $mesFichiers["tmp_name"][$i] . " vers " . PATH_DATAS . $nom . " !<br />";
+            }
+        } else {
+            $logError .= "Le fichier " . $nom . " n'est pas de type " . MIME_TYPE . " !<br />";
+        }
+    }
+    if ($nbUploadOk > 0) {
+        $logSuccess .= "Envoi réussi de " . $nbUploadOk . " fichier" . ($nbUploadOk > 1 ? "s" : "") . "<br />";
+    }
+}
