@@ -76,7 +76,7 @@ function getPdfFiles(string $path): ArrayObject
  * @param bool $hideThumbs Faut-il cacher les miniatures
  * @return ArrayObject code HTML
  */
-function getHtmlForFiles(bool $hideThumbs) : ArrayObject
+function getHtmlForFiles(bool $hideThumbs): ArrayObject
 {
     $monRetour = new ArrayObject();
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
@@ -106,7 +106,8 @@ function getHtmlForFiles(bool $hideThumbs) : ArrayObject
  * @param string $logError log d'erreurs
  * @param string $logSuccess log de succès
  */
-function saveUploadedFiles(string &$logError, string &$logSuccess) {
+function saveUploadedFiles(string &$logError, string &$logSuccess)
+{
     $mesFichiers = [];
     // Cas envoi simple => on convertit en array comme si envoi multiple
     if (!is_array($_FILES[FIELD_UPLOAD]["name"])) {
