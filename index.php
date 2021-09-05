@@ -81,7 +81,7 @@ if (isset($_GET['updateCache']) || IS_CRON) {
 <header>
     <!-- navbar -->
     <nav class="navbar navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="<?= BASE_URL_AFFICHAGE ?>">
             <img src="<?= DEFAULT_THUMBS ?>" width="30" height="30" alt="pdfWebExplorer">
             pdfWebExplorer
         </a>
