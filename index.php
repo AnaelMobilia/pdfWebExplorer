@@ -92,6 +92,15 @@ if (isset($_GET['updateCache']) || IS_CRON) {
             <option value="?" <?= (SLOW_CONNEXION ? '' : 'selected') ?>>Standard</option>
             <option value="?slow" <?= (SLOW_CONNEXION ? 'selected' : '') ?>>Simplifié</option>
         </select>
+        <!-- Catégorie de documents -->
+        <label for="categorie" class="form-label">Type :</label>
+        <select class="form-select d-inline" id="categorie" style="width: auto !important;"
+                onchange="self.location.href='<?= BASE_URL_AFFICHAGE ?>&cat='+this.value;">
+            <option value="-1">Tous</option>
+            <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
+                <option value="<?= $id ?>" <?= ((isset($_REQUEST["cat"]) && $_REQUEST["cat"] == $id) ? "selected" : "") ?>><?= $uneCategorie ?></option>
+            <?php endforeach; ?>
+        </select>
         <!-- Envoi de fichiers PDF -->
         <form method="POST" enctype="multipart/form-data" class="form-inline border border-info rounded">
             &nbsp;
