@@ -231,11 +231,11 @@ if (isset($_GET['updateCache']) || IS_CRON) {
         <?php endif; ?>
         <div class="row">
             <?= (SLOW_CONNEXION ? "<ul>" : "") ?>
-            <? foreach (getHtmlForFiles(SLOW_CONNEXION) as $unFichier): ?>
+            <?php foreach (getHtmlForFiles(SLOW_CONNEXION) as $unFichier): ?>
                 <<?= (SLOW_CONNEXION ? "li" : "div") ?> class="col">
                 <?= $unFichier ?>
                 <<?= (SLOW_CONNEXION ? "/li" : "/div") ?>>
-            <? endforeach; ?>
+            <?php endforeach; ?>
             <?= (SLOW_CONNEXION ? "</ul>" : "") ?>
         </div>
 </main>
