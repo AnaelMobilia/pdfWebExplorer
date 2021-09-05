@@ -39,3 +39,6 @@ define('MIME_TYPE', 'application/pdf');
 // Nom de champs utilisés en JS
 define('FIELD_SEARCH', 'recherche');
 define('FIELD_UPLOAD', 'upload');
+
+// Catégories de document
+define('CATEGORIES', ["categorie 1", "categorie 2"]);

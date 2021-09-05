@@ -85,7 +85,12 @@ if (isset($_GET['updateCache']) || IS_CRON) {
             <img src="<?= DEFAULT_THUMBS ?>" width="30" height="30" alt="pdfWebExplorer">
             pdfWebExplorer
         </a>
-        <a href="<?= (SLOW_CONNEXION ? '?' : '?slow') ?>" class="btn btn-info">Changer d'affichage</a>
+        <!-- Type d'affichage -->
+        <label for="affichage" class="form-label">Affichage :</label>
+        <select class="form-select d-inline" id="affichage" style="width: auto !important;" onchange="self.location.href='index.php'+this.value;">
+            <option value="?" <?= (SLOW_CONNEXION ? '' : 'selected') ?>>Standard</option>
+            <option value="?slow" <?= (SLOW_CONNEXION ? 'selected' : '') ?>>Simplifié</option>
+        </select>
         <!-- Envoi de fichiers PDF -->
         <form method="POST" enctype="multipart/form-data" class="form-inline border border-info rounded">
             &nbsp;
