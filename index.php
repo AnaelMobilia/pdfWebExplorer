@@ -86,30 +86,37 @@ if (isset($_GET['updateCache']) || IS_CRON) {
             pdfWebExplorer
         </a>
         <!-- Type d'affichage -->
-        <label for="affichage" class="form-label">Affichage :</label>
-        <select class="form-select d-inline" id="affichage" style="width: auto !important;"
-                onchange="self.location.href='<?= BASE_URL ?>'+this.value;">
-            <option value="?" <?= (SLOW_CONNEXION ? '' : 'selected') ?>>Standard</option>
-            <option value="?slow" <?= (SLOW_CONNEXION ? 'selected' : '') ?>>Simplifié</option>
-        </select>
+        <div class="nav-item">
+            <label for="affichage" class="form-label">Affichage</label>
+            <select class="form-select d-inline" id="affichage" style="width: auto !important;"
+                    onchange="self.location.href='<?= BASE_URL ?>'+this.value;">
+                <option value="?" <?= (SLOW_CONNEXION ? '' : 'selected') ?>>Standard</option>
+                <option value="?slow" <?= (SLOW_CONNEXION ? 'selected' : '') ?>>Simplifié</option>
+            </select>
+        </div>
         <!-- Catégorie de documents -->
-        <label for="categorie" class="form-label">Type :</label>
-        <select class="form-select d-inline" id="categorie" style="width: auto !important;"
-                onchange="self.location.href='<?= BASE_URL_AFFICHAGE ?>&cat='+this.value;">
-            <option value="<?= CATEGORIES_TOUTES ?>">Tous</option>
-            <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
-                <option value="<?= $id ?>" <?= ((isset($_REQUEST["cat"]) && $_REQUEST["cat"] == $id) ? "selected" : "") ?>><?= $uneCategorie ?></option>
-            <?php endforeach; ?>
-        </select>
+        <div class="nav-item">
+            <label for="categorie" class="form-label">Catégorie</label>
+            <select class="form-select d-inline" id="categorie" style="width: auto !important;"
+                    onchange="self.location.href='<?= BASE_URL_AFFICHAGE ?>&cat='+this.value;">
+                <option value="<?= CATEGORIES_TOUTES ?>">Toutes</option>
+                <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
+                    <option value="<?= $id ?>" <?= ((isset($_REQUEST["cat"]) && $_REQUEST["cat"] == $id) ? "selected" : "") ?>><?= $uneCategorie ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
         <!-- Envoi de fichiers PDF -->
-        <form method="POST" enctype="multipart/form-data" class="form-inline border border-info rounded">
+        <!--
+        <form method="POST" enctype="multipart/form-data" class="form-inline border border-info rounded" disabled="">
             &nbsp;
             <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>" type="file"
-                   class="file" multiple onchange="verifierNombreFichiers()"/>
+                   class="file" multiple onchange="verifierNombreFichiers()" disabled/>
             &nbsp;
-            <input type="submit" class="btn btn-info" value="Envoyer des fichiers"/>
+            <input type="submit" class="btn btn-info" value="Envoyer des fichiers" disabled/>
             &nbsp;
         </form>
+-->
+        <button type="button" class="btn btn-info" disabled>Envoyer des fichiers</button>
         <form class="form-inline my-2 my-lg-0" action="#">
             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher"
                    id="<?= FIELD_SEARCH ?>" onkeyup="maRecherche()">
