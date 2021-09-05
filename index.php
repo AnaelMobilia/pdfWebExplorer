@@ -180,8 +180,8 @@ if (isset($_GET['updateCache']) || IS_CRON) {
     <link rel="icon" type="image/png" href="<?= DEFAULT_THUMBS ?>" sizes="16x16">
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap-4.5.3.min.css" rel="stylesheet"
-          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="css/bootstrap-5.1.0.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <!-- Sticky navbar -->
     <style>
         /* Show it is fixed to the top */
