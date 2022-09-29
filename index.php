@@ -66,8 +66,8 @@ if (isset($_GET['updateCache']) || IS_CRON) {
     <link rel="icon" type="image/png" href="<?= DEFAULT_THUMBS ?>" sizes="16x16">
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap-5.1.0.min.css" rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="css/bootstrap-5.2.1.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <!-- Sticky navbar -->
     <style>
         /* Show it is fixed to the top */
@@ -171,8 +171,8 @@ if (isset($_GET['updateCache']) || IS_CRON) {
         </div>
 </main>
 
-<script src="js/bootstrap-5.1.0.min.js"
-        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+<script src="js/bootstrap-5.2.1.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
 <script>
     /**
