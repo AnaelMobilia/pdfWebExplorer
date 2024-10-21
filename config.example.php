@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2020-2021 Anael MOBILIA
+ * Copyright 2020-2024 Anael MOBILIA
  *
  * This file is part of pdfWebExplorer
  *
