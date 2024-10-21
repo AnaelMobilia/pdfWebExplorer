@@ -129,6 +129,8 @@ function saveUploadedFiles(string &$logError, string &$logSuccess)
     for ($i = 0; $i < $nbFichiers; $i++) {
         // Nettoyage du nom du fichier
         $nom = str_replace(["..", "/", "\\", "<", ">"], "", $mesFichiers["name"][$i]);
+        // Passage en minuscule de l'extension
+        $nom = pathinfo($nom, PATHINFO_FILENAME) . '.' . strtolower(pathinfo($nom, PATHINFO_EXTENSION));
         // Gestion de la catégorie
         if (!empty(CATEGORIES)) {
             $nom = (int)$_REQUEST["cat"] . " - " . $nom;
