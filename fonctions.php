@@ -137,7 +137,10 @@ function saveUploadedFiles(string &$logError, string &$logSuccess)
         }
 
         // Vérification du type du fichier
-        if (mime_content_type($mesFichiers["tmp_name"][$i]) == MIME_TYPE) {
+        if (
+            mime_content_type($mesFichiers["tmp_name"][$i]) === MIME_TYPE
+            && !file_exists(PATH_DATAS . $nom)
+        ) {
             // Déplacement du fichier
             if (move_uploaded_file($mesFichiers["tmp_name"][$i], PATH_DATAS . $nom)) {
                 $nbUploadOk++;
