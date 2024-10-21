@@ -62,7 +62,7 @@ if (isset($_GET['updateCache']) || IS_CRON) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <title>phpWebExplorer</title>
+    <title>pdfWebExplorer</title>
     <link rel="icon" type="image/png" href="<?= DEFAULT_THUMBS ?>" sizes="16x16">
 
     <!-- Bootstrap core CSS -->
