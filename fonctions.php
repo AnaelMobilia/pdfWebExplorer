@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with pdfWebExplorer If not, see <http://www.gnu.org/licenses/>
  */
+
 /**
  * Fonctions utilisées par l'application
  */
@@ -50,18 +51,18 @@ function getPdfFiles(string $path): ArrayObject
 
     // Filtre éventuel
     $monFiltre = "";
-    if (isset($_REQUEST["cat"]) && is_numeric($_REQUEST["cat"]) && $_REQUEST["cat"] != CATEGORIES_TOUTES) {
+    if (isset($_REQUEST["cat"]) && is_numeric($_REQUEST["cat"]) && $_REQUEST["cat"] !== CATEGORIES_TOUTES) {
         $monFiltre = (int)$_REQUEST["cat"] . " - ";
     }
 
     $listeBrute = scandir($path);
     foreach ($listeBrute as $unItem) {
         // Si ce n'est pas un dossier...
-        if (!is_dir($path . $unItem) && substr($unItem, -4) == ".pdf") {
+        if (!is_dir($path . $unItem) && substr($unItem, -4) === ".pdf") {
             // Vérification du filtre éventuel
             if (
                 $monFiltre === ""    // Pas de filtre
-                || substr($unItem, 0, strlen($monFiltre)) === $monFiltre // Filtre OK
+                || strpos($unItem, $monFiltre) === 0 // Filtre OK
             ) {
                 // On l'ajoute au retour
                 $monRetour->append($unItem);
@@ -84,7 +85,7 @@ function getHtmlForFiles(bool $hideThumbs): ArrayObject
         $nomMiniature = $unFichier . ".png";
         $nomAffiche = str_replace(".pdf", "", $unFichier);
         // Suppression de la catégorie si définies
-        if(!empty(CATEGORIES)) {
+        if (!empty(CATEGORIES)) {
             $nomAffiche = preg_replace("/^[\d] - (.*)$/", "$1", $nomAffiche, 1);
         }
         if (file_exists(PATH_THUMBS . $nomMiniature)) {
@@ -121,7 +122,7 @@ function saveUploadedFiles(string &$logError, string &$logSuccess)
         // Envoi multiple, déjà bien formaté
         $mesFichiers = $_FILES[FIELD_UPLOAD];
     }
-    $nbFichiers = sizeof($mesFichiers["name"]);
+    $nbFichiers = count($mesFichiers["name"]);
     $nbUploadOk = 0;
 
     // Pour chaque fichier
