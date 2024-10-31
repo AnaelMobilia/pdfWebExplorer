@@ -63,7 +63,7 @@ if (isset($_FILES[FIELD_UPLOAD])) {
     <nav class="navbar navbar-light bg-light fixed-top">
         <a class="navbar-brand" href="<?= BASE_URL ?>">
             <img src="<?= DEFAULT_THUMBS ?>" width="30" height="30" alt="pdfWebExplorer">
-            pdfWebExplorer
+            pdfWebExplorer <small class="text-secondary">(<?= count(scandir(PATH_DATAS)) ?> fichiers)</small>
         </a>
         <!-- Catégorie de documents -->
         <div class="nav-item">
@@ -133,7 +133,6 @@ if (isset($_FILES[FIELD_UPLOAD])) {
             <?php foreach (getHtmlForFiles() as $unFichier): ?>
                 <div class="col ps-0 pe-2 mt-0 mb-2">
                 <?= $unFichier ?>
-                <<?= (SLOW_CONNEXION ? '/li' : '/div') ?>>
             <?php endforeach; ?>
         </div>
 </main>
