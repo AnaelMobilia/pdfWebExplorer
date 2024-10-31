@@ -32,7 +32,7 @@ $logError = '';
 
 // Envoi de fichiers sur la plateforme
 if (isset($_FILES[FIELD_UPLOAD])) {
-    // Traitement & enregistrement
+    // Traitement et enregistrement
     saveUploadedFiles($logError, $logSuccess);
 }
 
@@ -112,16 +112,14 @@ if (isset($_FILES[FIELD_UPLOAD])) {
                                type="file" class="form-control" multiple onchange="verifierNombreFichiers()"/>
                     </div>
                     <!-- Catégorie du fichier -->
-                    <?php if (!empty(CATEGORIES)) : ?>
-                        <div class="mb-3">
-                            <label for="categorie" class="form-label">Catégorie</label>
-                            <select name="cat" class="form-select" id="categorie">
-                                <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
-                                    <option value="<?= $id ?>"><?= $uneCategorie ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    <?php endif; ?>
+                    <div class="mb-3">
+                        <label for="categorie" class="form-label">Catégorie</label>
+                        <select name="cat" class="form-select" id="categorie">
+                            <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
+                                <option value="<?= $id ?>"><?= $uneCategorie ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <input type="submit" class="btn btn-info" value="Envoyer" />
                 </form>
             </div>
@@ -183,7 +181,7 @@ if (isset($_FILES[FIELD_UPLOAD])) {
         const input = document.querySelector("#<?= FIELD_UPLOAD ?>");
         // Trop de fichiers
         if (input.files.length > <?= ini_get('max_file_uploads') ?>) {
-            alert("Trop de fichiers ont été selectionnés (maximum <?= ini_get('max_file_uploads') ?>)");
+            alert("Trop de fichiers ont été sélectionnés (maximum <?= ini_get('max_file_uploads') ?>)");
         }
     }
 </script>

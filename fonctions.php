@@ -84,14 +84,14 @@ function getHtmlForFiles(bool $hideThumbs): ArrayObject
         $monHtml = '';
         $nomMiniature = $unFichier . '.png';
         $nomAffiche = str_replace('.pdf', '', $unFichier);
-        // Suppression de la catégorie si définies
+        // Suppression de la catégorie si définie
         if (!empty(CATEGORIES)) {
             $nomAffiche = preg_replace('#^[0-9] - (.*)$#', '$1', $nomAffiche, 1);
         }
         if (file_exists(PATH_THUMBS . $nomMiniature)) {
             $maMiniature = URL_THUMBS . $nomMiniature;
         } else {
-            // Miniature absente -> image par défaut
+            // Miniature absente → image par défaut
             $maMiniature = DEFAULT_THUMBS;
         }
         $monHtml .= '<a href="' . URL_DATAS . $unFichier . '" target="blank" class="text-break">';

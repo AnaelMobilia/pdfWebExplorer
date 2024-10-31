@@ -26,27 +26,27 @@ define('SLOW_CONNEXION', isset($_REQUEST['slow']));
 // URL par défaut
 define('BASE_URL', 'https://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']));
 // URL avec le mode d'affichage
-define('BASE_URL_AFFICHAGE', BASE_URL . '?' . (SLOW_CONNEXION ? 'slow' : ''));
-// Répertoire & URL pour les les fichiers PDF
-define('FOLDER_DATAS', '/fichiers/');
-define('PATH_DATAS', __DIR__ . FOLDER_DATAS);
+const BASE_URL_AFFICHAGE = BASE_URL . '?' . (SLOW_CONNEXION ? 'slow' : '');
+// Répertoire & URL pour les fichiers PDF
+const FOLDER_DATAS = '/fichiers/';
+const PATH_DATAS = __DIR__ . FOLDER_DATAS;
 define('URL_DATAS', BASE_URL . substr(FOLDER_DATAS, 1));
-// Répertoire & URL pour les les miniatures des fichiers PDF
-define('FOLDER_THUMBS', '/miniatures/');
-define('PATH_THUMBS', __DIR__ . FOLDER_THUMBS);
+// Répertoire & URL pour les miniatures des fichiers PDF
+const FOLDER_THUMBS = '/miniatures/';
+const PATH_THUMBS = __DIR__ . FOLDER_THUMBS;
 define('URL_THUMBS', BASE_URL . substr(FOLDER_THUMBS, 1));
 // Miniature par défaut
-define('DEFAULT_THUMBS', URL_THUMBS . 'default_image.png');
+const DEFAULT_THUMBS = URL_THUMBS . 'default_image.png';
 // Type MIME des fichiers acceptés
-define('MIME_TYPE', 'application/pdf');
+const MIME_TYPE = 'application/pdf';
 
 // Nom de champs utilisés en JS
-define('FIELD_SEARCH', 'recherche');
-define('FIELD_UPLOAD', 'upload');
+const FIELD_SEARCH = 'recherche';
+const FIELD_UPLOAD = 'upload';
 
 // Catégories de document
-define('CATEGORIES', ['categorie 1', 'categorie 2']);
-define('CATEGORIES_TOUTES', -1);
+const CATEGORIES = ['catégorie 1', 'catégorie 2'];
+const CATEGORIES_TOUTES = -1;
 
 // Chargement des fonctions
-require __DIR__ . 'fonctions.php';
+require __DIR__ . '/fonctions.php';
