@@ -18,6 +18,8 @@
  * along with pdfWebExplorer If not, see <http://www.gnu.org/licenses/>
  */
 
+require "config.php";
+
 // Mettre à jour les miniatures
 foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
     $miniatureFichier = PATH_THUMBS . $unFichier . ".png";

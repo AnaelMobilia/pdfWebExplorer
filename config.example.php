@@ -47,3 +47,6 @@ define('FIELD_UPLOAD', 'upload');
 // Catégories de document
 define('CATEGORIES', ["categorie 1", "categorie 2"]);
 define('CATEGORIES_TOUTES', -1);
+
+// Chargement des fonctions
+require __DIR__ . 'fonctions.php';

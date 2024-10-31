@@ -25,7 +25,6 @@ if ($_SERVER["HTTPS"] !== "on") {
 }
 
 require "config.php";
-require "fonctions.php";
 
 // Variables de retour utilisateur
 $logSuccess = "";
