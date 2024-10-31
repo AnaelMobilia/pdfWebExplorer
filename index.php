@@ -19,16 +19,16 @@
  */
 
 // Forcer le HTTPS
-if ($_SERVER["HTTPS"] !== "on") {
-    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+if ($_SERVER['HTTPS'] !== 'on') {
+    header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     die();
 }
 
-require "config.php";
+require 'config.php';
 
 // Variables de retour utilisateur
-$logSuccess = "";
-$logError = "";
+$logSuccess = '';
+$logError = '';
 
 // Envoi de fichiers sur la plateforme
 if (isset($_FILES[FIELD_UPLOAD])) {
@@ -82,7 +82,7 @@ if (isset($_FILES[FIELD_UPLOAD])) {
                     onchange="self.location.href='<?= BASE_URL_AFFICHAGE ?>&cat='+this.value;">
                 <option value="<?= CATEGORIES_TOUTES ?>">Toutes</option>
                 <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
-                    <option value="<?= $id ?>" <?= ((isset($_REQUEST["cat"]) && $_REQUEST["cat"] == $id) ? "selected" : "") ?>><?= $uneCategorie ?></option>
+                    <option value="<?= $id ?>" <?= ((isset($_REQUEST['cat']) && $_REQUEST['cat'] === $id) ? 'selected' : '') ?>><?= $uneCategorie ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -142,13 +142,13 @@ if (isset($_FILES[FIELD_UPLOAD])) {
             </div>
         <?php endif; ?>
         <div class="row">
-            <?= (SLOW_CONNEXION ? "<ul>" : "") ?>
+            <?= (SLOW_CONNEXION ? '<ul>' : '') ?>
             <?php foreach (getHtmlForFiles(SLOW_CONNEXION) as $unFichier): ?>
-                <<?= (SLOW_CONNEXION ? "li" : "div") ?> class="col">
+                <<?= (SLOW_CONNEXION ? 'li' : 'div') ?> class="col">
                 <?= $unFichier ?>
-                <<?= (SLOW_CONNEXION ? "/li" : "/div") ?>>
+                <<?= (SLOW_CONNEXION ? '/li' : '/div') ?>>
             <?php endforeach; ?>
-            <?= (SLOW_CONNEXION ? "</ul>" : "") ?>
+            <?= (SLOW_CONNEXION ? '</ul>' : '') ?>
         </div>
 </main>
 
