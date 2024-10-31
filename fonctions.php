@@ -52,7 +52,7 @@ function getPdfFiles(string $path): ArrayObject
     // Filtre éventuel
     $monFiltre = '';
     if (isset($_REQUEST['cat']) && is_numeric($_REQUEST['cat']) && $_REQUEST['cat'] !== CATEGORIES_TOUTES) {
-        $monFiltre = (int)$_REQUEST['cat'] . ' - ';
+        $monFiltre = (int)$_REQUEST['cat'] . SEPARATEUR_CATEGORIE;
     }
 
     $listeBrute = scandir($path);
@@ -85,7 +85,7 @@ function getHtmlForFiles(): ArrayObject
         $nomAffiche = str_replace('.pdf', '', $unFichier);
         // Suppression de la catégorie si définie
         if (!empty(CATEGORIES)) {
-            $nomAffiche = preg_replace('#^[0-9] - (.*)$#', '$1', $nomAffiche, 1);
+            $nomAffiche = preg_replace('#^[0-9]' . preg_quote(SEPARATEUR_CATEGORIE, '#') . '(.*)$#', '$1', $nomAffiche, 1);
         }
         if (file_exists(PATH_THUMBS . $nomMiniature)) {
             $maMiniature = URL_THUMBS . $nomMiniature;
@@ -129,8 +129,8 @@ function saveUploadedFiles(string &$logError, string &$logSuccess)
         // Passage en minuscule de l'extension
         $nom = pathinfo($nom, PATHINFO_FILENAME) . '.' . strtolower(pathinfo($nom, PATHINFO_EXTENSION));
         // Gestion de la catégorie
-        if (!empty(CATEGORIES)) {
-            $nom = (int)$_REQUEST['cat'] . ' - ' . $nom;
+        if (isset($_REQUEST['cat'])) {
+            $nom = (int)$_REQUEST['cat'] . SEPARATEUR_CATEGORIE . $nom;
         }
 
         // Vérification du type du fichier

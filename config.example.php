@@ -43,5 +43,8 @@ const FIELD_UPLOAD = 'upload';
 const CATEGORIES = ['catégorie 1', 'catégorie 2'];
 const CATEGORIES_TOUTES = -1;
 
+// Séparateur dans le nom du fichier
+const SEPARATEUR_CATEGORIE = ' - ';
+
 // Chargement des fonctions
 require __DIR__ . '/fonctions.php';
