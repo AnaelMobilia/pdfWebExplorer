@@ -1,2 +1,6 @@
+.env
+.htaccess
+.htpasswd
 .idea/
+.passlist
 config.php
