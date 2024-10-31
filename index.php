@@ -17,11 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with pdfWebExplorer If not, see <http://www.gnu.org/licenses/>
  */
-// Est-ce une tâche cron
-define('IS_CRON', !isset($_SERVER['REMOTE_ADDR']));
 
-// Forcer le HTTPS (sauf pour tâche cron)
-if ($_SERVER["HTTPS"] != "on" && !IS_CRON) {
+// Forcer le HTTPS
+if ($_SERVER["HTTPS"] !== "on") {
     header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
     die();
 }
@@ -37,22 +35,6 @@ $logError = "";
 if (isset($_FILES[FIELD_UPLOAD])) {
     // Traitement & enregistrement
     saveUploadedFiles($logError, $logSuccess);
-}
-
-// Si on demande une mise à jour des miniatures
-if (isset($_GET['updateCache']) || IS_CRON) {
-    foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
-        $miniatureFichier = PATH_THUMBS . $unFichier . ".png";
-        // Génération des miniatures manquantes///
-        if (!file_exists($miniatureFichier)) {
-            try {
-                genPdfThumbnail(PATH_DATAS . $unFichier, $miniatureFichier);
-            } catch (ImagickException $e) {
-                $logError .= "Erreur à la génération de la miniature pour " . $unFichier . " (" . $e->getTraceAsString() . ")";
-            }
-        }
-    }
-    die();
 }
 
 ?>
