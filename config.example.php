@@ -20,13 +20,8 @@
 /**
  * Configuration de l'application
  */
-// Connexion limitée
-define('SLOW_CONNEXION', isset($_REQUEST['slow']));
-
 // URL par défaut
 define('BASE_URL', 'https://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']));
-// URL avec le mode d'affichage
-const BASE_URL_AFFICHAGE = BASE_URL . '?' . (SLOW_CONNEXION ? 'slow' : '');
 // Répertoire & URL pour les fichiers PDF
 const FOLDER_DATAS = '/fichiers/';
 const PATH_DATAS = __DIR__ . FOLDER_DATAS;

@@ -74,10 +74,9 @@ function getPdfFiles(string $path): ArrayObject
 
 /**
  * Génère le code HTML pour afficher les fichiers, miniatures, liens...
- * @param bool $hideThumbs Faut-il cacher les miniatures
  * @return ArrayObject code HTML
  */
-function getHtmlForFiles(bool $hideThumbs): ArrayObject
+function getHtmlForFiles(): ArrayObject
 {
     $monRetour = new ArrayObject();
     foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
@@ -94,10 +93,8 @@ function getHtmlForFiles(bool $hideThumbs): ArrayObject
             // Miniature absente → image par défaut
             $maMiniature = DEFAULT_THUMBS;
         }
-        $monHtml .= '<a href="' . URL_DATAS . $unFichier . '" target="blank" class="text-break">';
-        if (!$hideThumbs) {
-            $monHtml .= '<img src="' . $maMiniature . '" width="100" height="100" alt="' . $nomAffiche . '" loading="lazy"/><br />';
-        }
+        $monHtml .= '<a href="' . URL_DATAS . $unFichier . '" target="blank" class="text-break link-underline link-underline-opacity-0 link-underline-opacity-50-hover">';
+        $monHtml .= '<img src="' . $maMiniature . '" width="125" height="125" alt="' . $nomAffiche . '" loading="lazy"/><br />';
         $monHtml .= $nomAffiche . '</a>'.PHP_EOL;
 
         $monRetour->append($monHtml);

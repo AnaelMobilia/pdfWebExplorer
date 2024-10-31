@@ -61,38 +61,29 @@ if (isset($_FILES[FIELD_UPLOAD])) {
 <header>
     <!-- navbar -->
     <nav class="navbar navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="<?= BASE_URL_AFFICHAGE ?>">
+        <a class="navbar-brand" href="<?= BASE_URL ?>">
             <img src="<?= DEFAULT_THUMBS ?>" width="30" height="30" alt="pdfWebExplorer">
             pdfWebExplorer
         </a>
-        <!-- Type d'affichage -->
-        <div class="nav-item">
-            <label for="affichage" class="form-label">Affichage</label>
-            <select class="form-select d-inline" id="affichage" style="width: auto !important;"
-                    onchange="self.location.href='<?= BASE_URL ?>'+this.value;">
-                <option value="?" <?= (SLOW_CONNEXION ? '' : 'selected') ?>>Standard</option>
-                <option value="?slow" <?= (SLOW_CONNEXION ? 'selected' : '') ?>>Simplifié</option>
-            </select>
-        </div>
         <!-- Catégorie de documents -->
         <div class="nav-item">
-            <label for="categorie" class="form-label">Catégorie</label>
+            <label for="categorie" class="form-label">Catégories</label>
             <select class="form-select d-inline" id="categorie" style="width: auto !important;"
-                    onchange="self.location.href='<?= BASE_URL_AFFICHAGE ?>&cat='+this.value;">
+                    onchange="self.location.href='<?= BASE_URL ?>?cat='+this.value;">
                 <option value="<?= CATEGORIES_TOUTES ?>">Toutes</option>
                 <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
                     <option value="<?= $id ?>" <?= ((isset($_REQUEST['cat']) && $_REQUEST['cat'] === $id) ? 'selected' : '') ?>><?= $uneCategorie ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
-        <!-- Envoi de fichiers PDF -->
-        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpload">
-            Envoyer des fichiers
-        </button>
-        <form class="form-inline my-2 my-lg-0" action="#">
-            <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher"
+        <form class="form-inline" action="#">
+            <input class="form-control" type="search" placeholder="Rechercher" aria-label="Rechercher"
                    id="<?= FIELD_SEARCH ?>" onkeyup="maRecherche()">
         </form>
+        <!-- Envoi de fichiers PDF -->
+        <button type="button" class="btn btn-info me-3" data-bs-toggle="modal" data-bs-target="#modalUpload">
+            Envoyer des fichiers
+        </button>
     </nav>
 </header>
 <!-- Modal d'envoi des fichiers -->
@@ -139,13 +130,11 @@ if (isset($_FILES[FIELD_UPLOAD])) {
             </div>
         <?php endif; ?>
         <div class="row">
-            <?= (SLOW_CONNEXION ? '<ul>' : '') ?>
-            <?php foreach (getHtmlForFiles(SLOW_CONNEXION) as $unFichier): ?>
-                <<?= (SLOW_CONNEXION ? 'li' : 'div') ?> class="col">
+            <?php foreach (getHtmlForFiles() as $unFichier): ?>
+                <div class="col ps-0 pe-2 mt-0 mb-2">
                 <?= $unFichier ?>
                 <<?= (SLOW_CONNEXION ? '/li' : '/div') ?>>
             <?php endforeach; ?>
-            <?= (SLOW_CONNEXION ? '</ul>' : '') ?>
         </div>
 </main>
 
