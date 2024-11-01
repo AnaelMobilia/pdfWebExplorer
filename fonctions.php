@@ -52,7 +52,12 @@ function getPdfFiles(string $path, bool $includeArchive = false): ArrayObject
 
     // Filtre éventuel
     $monFiltre = '';
-    if (isset($_REQUEST['cat']) && is_numeric($_REQUEST['cat']) && $_REQUEST['cat'] !== CATEGORIES_TOUTES) {
+    if (
+        isset($_REQUEST['cat'])
+        && is_numeric($_REQUEST['cat'])
+        && $_REQUEST['cat'] !== CATEGORIES_TOUTES
+        && !isset($_FILES[FIELD_UPLOAD])
+    ) {
         $monFiltre = (int)$_REQUEST['cat'] . SEPARATEUR_CATEGORIE;
     }
 
