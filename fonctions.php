@@ -43,9 +43,10 @@ function genPdfThumbnail(string $source, string $destination)
 /**
  * Liste des fichiers PDF contenus dans un répertoire
  * @param string $path PATH à analyser (sans récursivité)
+ * @param bool $includeArchive Inclure les fichiers archivés ?
  * @return ArrayObject des fichiers (répondant au critère de filtre éventuel)
  */
-function getPdfFiles(string $path): ArrayObject
+function getPdfFiles(string $path, bool $includeArchive = false): ArrayObject
 {
     $monRetour = new ArrayObject();
 
@@ -64,6 +65,13 @@ function getPdfFiles(string $path): ArrayObject
                 $monFiltre === ''    // Pas de filtre
                 || strpos($unItem, $monFiltre) === 0 // Filtre OK
             ) {
+                // Exclure les fichiers archivés ?
+                if (
+                    strpos($unItem, CATEGORIE_ARCHIVES) === 0
+                    && !$includeArchive
+                ) {
+                    continue;
+                }
                 // On l'ajoute au retour
                 $monRetour->append($unItem);
             }
@@ -74,13 +82,17 @@ function getPdfFiles(string $path): ArrayObject
 
 /**
  * Génère le code HTML pour afficher les fichiers, miniatures, liens...
+ * @param ?ArrayObject $forceFile Forcer des fichiers spécifiquement
  * @return ArrayObject code HTML
  */
-function getHtmlForFiles(): ArrayObject
+function getHtmlForFiles(ArrayObject $forceFile = null): ArrayObject
 {
     $monRetour = new ArrayObject();
-    foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
-        $monHtml = '';
+    if(is_null($forceFile)){
+        $forceFile = getPdfFiles(PATH_DATAS);
+    }
+    foreach ($forceFile as $unFichier) {
+        $monHtml = '<div class="col ps-0 pe-2 mt-0 mb-2">';
         $nomMiniature = $unFichier . '.png';
         $nomAffiche = str_replace('.pdf', '', $unFichier);
         // Suppression de la catégorie si définie
@@ -95,7 +107,10 @@ function getHtmlForFiles(): ArrayObject
         }
         $monHtml .= '<a href="' . URL_DATAS . $unFichier . '" target="blank" class="text-break link-underline link-underline-opacity-0 link-underline-opacity-50-hover">';
         $monHtml .= '<img src="' . $maMiniature . '" width="125" height="125" alt="' . $nomAffiche . '" loading="lazy"/><br />';
-        $monHtml .= $nomAffiche . '</a>'.PHP_EOL;
+        $monHtml .= $nomAffiche . '</a><br />';
+        $monHtml .= '<a class="icon-link link-underline link-underline-opacity-0 link-underline-opacity-25-hover" onclick="ajaxCall(\'' . ACTION_RENOMMER . '\', \'' . $unFichier . '\', this.parentNode)" data-bs-toggle="tooltip" data-bs-title="Renommer"> 🖍 </a>';
+        $monHtml .= '<a class="icon-link link-underline link-underline-opacity-0 link-underline-opacity-25-hover" onclick="ajaxCall(\'' . ACTION_ARCHIVER . '\', \'' . $unFichier . '\', this.parentNode)" data-bs-toggle="tooltip" data-bs-title="Archiver"> 🗃️️ </a>';
+        $monHtml .= '</div>';
 
         $monRetour->append($monHtml);
     }

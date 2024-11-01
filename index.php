@@ -98,8 +98,7 @@ if (isset($_FILES[FIELD_UPLOAD])) {
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="<?= FIELD_UPLOAD ?>" class="form-label">Document(s)</label>
-                        <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>"
-                               type="file" class="form-control" multiple onchange="verifierNombreFichiers()"/>
+                        <input name="<?= FIELD_UPLOAD ?>[]" id="<?= FIELD_UPLOAD ?>" accept="<?= MIME_TYPE ?>" type="file" class="form-control" multiple onchange="verifierNombreFichiers()"/>
                     </div>
                     <!-- Catégorie du fichier -->
                     <div class="mb-3">
@@ -110,7 +109,7 @@ if (isset($_FILES[FIELD_UPLOAD])) {
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <input type="submit" class="btn btn-info" value="Envoyer" />
+                    <input type="submit" class="btn btn-info" value="Envoyer"/>
                 </form>
             </div>
         </div>
@@ -130,14 +129,13 @@ if (isset($_FILES[FIELD_UPLOAD])) {
             </div>
         <?php endif; ?>
         <div class="row">
-            <?php foreach (getHtmlForFiles() as $unFichier): ?>
-                <div class="col ps-0 pe-2 mt-0 mb-2">
-                <?= $unFichier ?>
+            <?php foreach (getHtmlForFiles() as $htmlFichier): ?>
+                <?= $htmlFichier ?>
             <?php endforeach; ?>
         </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
     /**
      * Filtre les éléments affichés en fonction de la saisie de l'utilisateur
@@ -169,6 +167,47 @@ if (isset($_FILES[FIELD_UPLOAD])) {
             alert("Trop de fichiers ont été sélectionnés (maximum <?= ini_get('max_file_uploads') ?>)");
         }
     }
+
+    /**
+     * Effectuer une action sur un fichier en ajax
+     * @param action Action à effectuer
+     * @param filename Nom du fichier sur lequel effectuer l'action
+     * @param e élément HTML pour injecter la modification
+     */
+    function ajaxCall(action, filename, e) {
+        let url = "ajax.php?action=" + action + "&filename=" + encodeURIComponent(filename)
+
+        if (action === '<?=ACTION_RENOMMER ?>') {
+            const newname = prompt("Nouveau nom du fichier ?", filename);
+            url += '&newName=' + encodeURIComponent(newname);
+        }
+        let req = new XMLHttpRequest();
+        req.open("GET", url);
+        req.addEventListener("load", function () {
+            if (req.status === 200) {
+                // Fermer toutes les tooltips
+                tooltipTriggerList.forEach((tooltip) => {
+                    const instance = bootstrap.Tooltip.getInstance(tooltip);
+                    instance.hide();
+                })
+                // Mettre à jour l'interface
+                e.innerHTML = req.response;
+                if (action === '<?=ACTION_ARCHIVER ?>') {
+                    e.remove();
+                }
+            } else {
+                console.error(req.status + " " + req.statusText + " " + url);
+            }
+        });
+        req.addEventListener("error", function () {
+            console.error("Erreur réseau avec l'URL " + url);
+        });
+        req.send(null);
+    }
+
+    // Activer les tooltips
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
 </body>
 </html>

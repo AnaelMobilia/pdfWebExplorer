@@ -21,7 +21,7 @@
 require "config.php";
 
 // Mettre à jour les miniatures
-foreach (getPdfFiles(PATH_DATAS) as $unFichier) {
+foreach (getPdfFiles(PATH_DATAS, true) as $unFichier) {
     $miniatureFichier = PATH_THUMBS . $unFichier . ".png";
     // Génération des miniatures manquantes
     if (!file_exists($miniatureFichier)) {

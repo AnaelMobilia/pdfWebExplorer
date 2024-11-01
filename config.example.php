@@ -42,6 +42,11 @@ const FIELD_UPLOAD = 'upload';
 // Catégories de document
 const CATEGORIES = ['catégorie 1', 'catégorie 2'];
 const CATEGORIES_TOUTES = -1;
+const CATEGORIE_ARCHIVES = 'archive';
+
+// Actions sur les fichiers
+const ACTION_RENOMMER = 'renommer';
+const ACTION_ARCHIVER = 'archiver';
 
 // Séparateur dans le nom du fichier
 const SEPARATEUR_CATEGORIE = ' - ';
