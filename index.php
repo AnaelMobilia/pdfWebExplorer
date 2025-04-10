@@ -115,6 +115,37 @@ if (isset($_FILES[FIELD_UPLOAD])) {
         </div>
     </div>
 </div>
+<!-- Modal de renommage d'un fichier -->
+<div class="modal fade" id="modalRename" tabindex="-1" aria-labelledby="modalRenameLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRenameLabel">Renommer un fichier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nom du fichier</label>
+                        <input name="name" id="name" type="text" class="form-control"/>
+                    </div>
+                    <!-- Catégorie du fichier -->
+                    <div class="mb-3">
+                        <label for="categorie" class="form-label">Catégorie</label>
+                        <select name="cat" class="form-select" id="categorie">
+                            <?php
+                            foreach (CATEGORIES as $id => $uneCategorie) : ?>
+                                <option value="<?= $id ?>"><?= $uneCategorie ?></option>
+                            <?php
+                            endforeach; ?>
+                        </select>
+                    </div>
+                    <input type="submit" class="btn btn-info" value="Envoyer"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
     <div class="container" id="monContainer">
