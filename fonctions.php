@@ -113,8 +113,8 @@ function getHtmlForFiles(ArrayObject $forceFile = null): ArrayObject
         $monHtml .= '<a href="' . URL_DATAS . $unFichier . '" target="blank" class="text-break link-underline link-underline-opacity-0 link-underline-opacity-50-hover">';
         $monHtml .= '<img src="' . $maMiniature . '" width="125" height="125" alt="' . $nomAffiche . '" loading="lazy"/><br />';
         $monHtml .= $nomAffiche . '</a><br />';
-        $monHtml .= '<a class="icon-link link-underline link-underline-opacity-0 link-underline-opacity-25-hover" onclick="ajaxCall(\'' . ACTION_RENOMMER . '\', \'' . $unFichier . '\', this.parentNode)" data-bs-toggle="tooltip" data-bs-title="Renommer"> 🖍 </a>';
-        $monHtml .= '<a class="icon-link link-underline link-underline-opacity-0 link-underline-opacity-25-hover" onclick="ajaxCall(\'' . ACTION_ARCHIVER . '\', \'' . $unFichier . '\', this.parentNode)" data-bs-toggle="tooltip" data-bs-title="Archiver"> 🗃️️ </a>';
+        $monHtml .= '<a class="icon-link link-underline link-underline-opacity-0 link-underline-opacity-25-hover" onclick="ajaxCall(\'' . ACTION_RENOMMER . '\', \'' . str_replace('\'', '\\\'', $unFichier) . '\', this.parentNode)" data-bs-toggle="tooltip" data-bs-title="Renommer"> 🖍 </a>';
+        $monHtml .= '<a class="icon-link link-underline link-underline-opacity-0 link-underline-opacity-25-hover" onclick="ajaxCall(\'' . ACTION_ARCHIVER . '\', \'' . str_replace('\'', '\\\'', $unFichier) . '\', this.parentNode)" data-bs-toggle="tooltip" data-bs-title="Archiver"> 🗃️️ </a>';
         $monHtml .= '</div>';
 
         $monRetour->append($monHtml);
