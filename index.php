@@ -70,9 +70,9 @@ if (isset($_FILES[FIELD_UPLOAD])) {
             <label for="categorie" class="form-label">Catégories</label>
             <select class="form-select d-inline" id="categorie" style="width: auto !important;"
                     onchange="self.location.href='<?= BASE_URL ?>?cat='+this.value;">
-                <option value="<?= CATEGORIES_TOUTES ?>">Toutes</option>
+                <option value="">Toutes</option>
                 <?php foreach (CATEGORIES as $id => $uneCategorie) : ?>
-                    <option value="<?= $id ?>" <?= ((isset($_REQUEST['cat']) && $_REQUEST['cat'] === $id) ? 'selected' : '') ?>><?= $uneCategorie ?></option>
+                    <option value="<?= $id ?>" <?= (isset($_REQUEST['cat'])&& is_numeric($_REQUEST['cat']) && (int) $_REQUEST['cat'] === $id ? 'selected' : '') ?>><?= $uneCategorie ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

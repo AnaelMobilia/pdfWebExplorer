@@ -41,7 +41,6 @@ const FIELD_UPLOAD = 'upload';
 
 // Catégories de document
 const CATEGORIES = ['catégorie 1', 'catégorie 2'];
-const CATEGORIES_TOUTES = -1;
 const CATEGORIE_ARCHIVES = 'archive';
 
 // Actions sur les fichiers

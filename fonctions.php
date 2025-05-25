@@ -55,10 +55,9 @@ function getPdfFiles(string $path, bool $includeArchive = false): ArrayObject
     if (
         isset($_REQUEST['cat'])
         && is_numeric($_REQUEST['cat'])
-        && $_REQUEST['cat'] !== CATEGORIES_TOUTES
         && !isset($_FILES[FIELD_UPLOAD])
     ) {
-        $monFiltre = (int)$_REQUEST['cat'] . SEPARATEUR_CATEGORIE;
+        $monFiltre = (int) $_REQUEST['cat'] . SEPARATEUR_CATEGORIE;
     }
 
     $listeBrute = scandir($path);
@@ -93,7 +92,7 @@ function getPdfFiles(string $path, bool $includeArchive = false): ArrayObject
 function getHtmlForFiles(ArrayObject $forceFile = null): ArrayObject
 {
     $monRetour = new ArrayObject();
-    if(is_null($forceFile)){
+    if (is_null($forceFile)) {
         $forceFile = getPdfFiles(PATH_DATAS);
     }
     foreach ($forceFile as $unFichier) {
@@ -149,7 +148,7 @@ function saveUploadedFiles(string &$logError, string &$logSuccess)
         // Passage en minuscule de l'extension
         $nom = pathinfo($nom, PATHINFO_FILENAME) . '.' . strtolower(pathinfo($nom, PATHINFO_EXTENSION));
         // Gestion de la catégorie
-        if (isset($_REQUEST['cat'])) {
+        if (isset($_REQUEST['cat']) && is_numeric($_REQUEST['cat'])) {
             $nom = (int)$_REQUEST['cat'] . SEPARATEUR_CATEGORIE . $nom;
         }
 
