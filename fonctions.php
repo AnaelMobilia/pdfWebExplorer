@@ -28,7 +28,7 @@
  * @param string $destination PATH de l'image destination
  * @throws ImagickException
  */
-function genPdfThumbnail(string $source, string $destination)
+function genPdfThumbnail(string $source, string $destination): void
 {
     echo $source . ' -> ' . $destination . PHP_EOL;
     $im = new Imagick($source . '[0]'); // 0-first page, 1-second page
@@ -37,7 +37,6 @@ function genPdfThumbnail(string $source, string $destination)
     $im->thumbnailimage(150, 150); // width and height
     $im->writeimage($destination);
     $im->clear();
-    $im->destroy();
 }
 
 /**
@@ -63,16 +62,16 @@ function getPdfFiles(string $path, bool $includeArchive = false): ArrayObject
     $listeBrute = scandir($path);
     foreach ($listeBrute as $unItem) {
         // Si ce n'est pas un dossier...
-        if (!is_dir($path . $unItem) && substr($unItem, -4) === '.pdf') {
+        if (!is_dir($path . $unItem) && str_ends_with($unItem, '.pdf')) {
             // Vérification du filtre éventuel
             if (
                 $monFiltre === ''    // Pas de filtre
-                || strpos($unItem, $monFiltre) === 0 // Filtre OK
+                || str_starts_with($unItem, $monFiltre) // Filtre OK
             ) {
                 // Exclure les fichiers archivés ?
                 if (
-                    strpos($unItem, CATEGORIE_ARCHIVES) === 0
-                    && !$includeArchive
+                    !$includeArchive
+                    && str_starts_with($unItem, CATEGORIE_ARCHIVES)
                 ) {
                     continue;
                 }
@@ -89,7 +88,7 @@ function getPdfFiles(string $path, bool $includeArchive = false): ArrayObject
  * @param ?ArrayObject $forceFile Forcer des fichiers spécifiquement
  * @return ArrayObject code HTML
  */
-function getHtmlForFiles(ArrayObject $forceFile = null): ArrayObject
+function getHtmlForFiles(?ArrayObject $forceFile = null): ArrayObject
 {
     $monRetour = new ArrayObject();
     if (is_null($forceFile)) {
@@ -127,10 +126,10 @@ function getHtmlForFiles(ArrayObject $forceFile = null): ArrayObject
  * @param string $logError log d'erreurs
  * @param string $logSuccess log de succès
  */
-function saveUploadedFiles(string &$logError, string &$logSuccess)
+function saveUploadedFiles(string &$logError, string &$logSuccess): void
 {
     $mesFichiers = [];
-    // Cas envoi simple => on convertit en array comme si envoi multiple
+    // Cas envoi simple → on convertit en array comme si envoi multiple
     if (!is_array($_FILES[FIELD_UPLOAD]['name'])) {
         $mesFichiers['name'] = [$_FILES[FIELD_UPLOAD]['name']];
         $mesFichiers['tmp_name'] = [$_FILES[FIELD_UPLOAD]['tmp_name']];

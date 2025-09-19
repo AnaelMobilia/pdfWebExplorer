@@ -24,14 +24,14 @@ require "config.php";
 if (
     !isset($_GET['action'], $_GET['filename'])
     || !in_array($_GET['action'], [ACTION_ARCHIVER, ACTION_RENOMMER], true)
-    || strpos($_GET['filename'], '..') !== false
-    || !(substr($_GET['filename'], -4) === '.pdf')
+    || str_contains($_GET['filename'], '..')
+    || !(str_ends_with($_GET['filename'], '.pdf'))
     || !file_exists(PATH_DATAS . $_GET['filename'])
     || ($_GET['action'] === ACTION_RENOMMER
         && (
             empty($_GET['newName'])
-            || strpos($_GET['newName'], '..') !== false
-            || !(substr($_GET['newName'], -4) === '.pdf')
+            || str_contains($_GET['newName'], '..')
+            || !(str_ends_with($_GET['newName'], '.pdf'))
             || $_GET['newName'] === $_GET['filename']
         )
     )
